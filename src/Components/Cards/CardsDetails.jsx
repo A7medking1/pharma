@@ -19,7 +19,8 @@ const CardsDetails = () => {
   async function fetchDataHandler() {
     try {
       const response = await fetch(
-        "http://e-pharmacy.runasp.net/api/Product/Categories"
+       // "http://e-pharmacy.runasp.net/api/Product/Categories"
+        "/api/Product/Categories"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");

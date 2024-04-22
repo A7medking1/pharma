@@ -11,6 +11,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Search.css";
 import { motion } from "framer-motion";
 
+
+
 const Search = (props) => {
   const dispatch = useDispatch();
 
@@ -41,8 +43,20 @@ const Search = (props) => {
 
   async function fetchDataHandler() {
     try {
+      // https://husseinghaly-001-site1.htempurl.com/api/product
       const response = await fetch(
-        `http://e-pharmacy.runasp.net/api/product?search=${searchQuery}`
+        //`http://e-pharmacy.runasp.net/api/product?search=${searchQuery}`
+        `https://husseinghaly-001-site1.htempurl.com/api/product?search=${searchQuery}`,{
+          method: 'GET',    
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Credentials': 'true'
+            },
+          withCredentials: true,    
+          crossorigin: true,    
+          mode: 'no-cors',
+        }
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");

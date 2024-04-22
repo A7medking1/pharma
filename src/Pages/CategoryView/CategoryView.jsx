@@ -1,35 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Search from "../../Components/Search/Search";
 import { Fragment } from "react";
 import { Row } from "react-bootstrap";
 import "../../css/Cares.css";
 
 const CategoryView = ({ categoryId, categoryName, ViewComponent }) => {
-  useEffect(() => {
-    fetchDataHandler();
-  }, []);
-
   const [products, setProducts] = useState([]);
 
-  async function fetchDataHandler() {
-    const response = await fetch(
-      `http://e-pharmacy.runasp.net/api/product?CategoryId=${categoryId}`
-    );
-    const Product = await response.json();
-    console.log(Product.data);
-    const ProductData = Product.data.map((item) => {
-      return {
+  // useCallback to memoize fetchDataHandler to prevent unnecessary re-creation
+  const fetchDataHandler = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `/api/product?CategoryId=${categoryId}`
+      );
+
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch products');
+      }
+      const product = await response.json();
+      console.log('Fetched JSON:', product); 
+      const productData = product.data.map(item => ({
         idProduct: item.id,
         nameProduct: item.name,
         imgProduct: item.pictureUrl,
         pharmaciesType: item.pharmacies,
         priceProduct: item.price,
         quantityProduct: item.quantity,
-      };
-    });
-    setProducts(ProductData);
-    console.log(ProductData);
-  }
+      }));
+      setProducts(productData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle errors here, for example, setting an error state
+    }
+  }, [categoryId]);
+
+  useEffect(() => {
+    fetchDataHandler();
+  }, [fetchDataHandler]);
 
   return (
     <Fragment>
