@@ -20,7 +20,14 @@ const CardsDetails = () => {
     try {
       const response = await fetch(
        // "http://e-pharmacy.runasp.net/api/Product/Categories"
-        "/api/Product/Categories"
+        "/api/Product/Categories" ,
+        {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Credentials': 'true'
+            },
+        }
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");

@@ -23,7 +23,7 @@ const ProductDetail = () => {
       try {
         const response = await fetch(
          // `http://e-pharmacy.runasp.net/api/product/${id}`
-          `/api/product/${id}`
+          "/api/product/${id}",
         );
         if (!response.ok) {
           throw new Error("Failed to fetch product");

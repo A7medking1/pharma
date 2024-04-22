@@ -11,7 +11,8 @@ const CategoryView = ({ categoryId, categoryName, ViewComponent }) => {
   const fetchDataHandler = useCallback(async () => {
     try {
       const response = await fetch(
-        `/api/product?CategoryId=${categoryId}`
+        `/api/product?CategoryId=${categoryId}`,
+      
       );
 
       
